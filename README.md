@@ -1,0 +1,164 @@
+# GitHub Copilot CLI - Complete Learning Guide
+
+A comprehensive learning resource for mastering GitHub Copilot in the command line. This repository provides structured examples, practical use cases, and best practices for using GitHub Copilot CLI effectively.
+
+## What is GitHub Copilot CLI?
+
+GitHub Copilot CLI is an AI-powered command-line tool that helps you:
+- **Get command suggestions** for tasks you want to accomplish
+- **Explain complex commands** in plain English
+- **Learn shell commands** through natural language interaction
+- **Boost productivity** in the terminal
+
+## Claude Code vs GitHub Copilot CLI
+
+New to GitHub Copilot CLI and wondering how it differs from Claude Code? Check out our comprehensive comparison guide:
+
+**[📊 Claude Code - GitHub Copilot CLI Differences](./CLAUDE-CODE-COMPARISON.md)**
+
+This guide covers:
+- Key differences in capabilities and use cases
+- When to use each tool
+- How to use both tools together effectively
+- Feature comparison and examples
+
+## Repository Structure
+
+This repository is organized into numbered folders in recommended learning order:
+
+| Folder | Focus | Time | Description |
+|--------|-------|------|-------------|
+| **01-getting-started** | Installation & Setup | 15 min | Install and configure Copilot CLI |
+| **02-suggest-command** | Command Suggestions | 30 min | Get AI-powered command suggestions |
+| **03-explain-command** | Command Explanations | 30 min | Understand complex commands |
+| **04-shell-integration** | Shell Configuration | 45 min | Deep shell integration and aliases |
+| **05-aliases-shortcuts** | Productivity Shortcuts | 30 min | Create powerful shortcuts |
+| **06-workflows** | Real-world Use Cases | 1 hr | Practical workflows and patterns |
+| **07-advanced** | Power User Features | 1 hr | Advanced tips and techniques |
+| **08-best-practices** | Security & Best Practices | 45 min | Safe and effective usage |
+
+**Total Learning Time**: ~5.5 hours (beginner to advanced)
+
+## Quick Start
+
+### Prerequisites
+- GitHub account with Copilot access
+- GitHub CLI (`gh`) installed
+- Basic command-line knowledge
+
+### Installation
+
+```bash
+# Install GitHub CLI if not already installed
+# Linux/WSL
+curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+sudo apt update
+sudo apt install gh
+
+# macOS
+brew install gh
+
+# Install Copilot CLI extension
+gh extension install github/gh-copilot
+
+# Authenticate
+gh auth login
+```
+
+### Basic Usage
+
+```bash
+# Get command suggestions
+gh copilot suggest "find all large files"
+
+# Explain a command
+gh copilot explain "tar -xzf archive.tar.gz"
+
+# With aliases (after setup)
+ghcs "list running docker containers"
+ghce "kubectl get pods --all-namespaces"
+```
+
+## Learning Paths
+
+### Beginner Path (1.5 hours)
+1. 01-getting-started
+2. 02-suggest-command
+3. 03-explain-command
+
+### Intermediate Path (3 hours)
+1. Complete Beginner Path
+2. 04-shell-integration
+3. 05-aliases-shortcuts
+4. 06-workflows
+
+### Advanced Path (5.5 hours)
+1. Complete all sections in order
+
+## Key Features Covered
+
+### Command Suggestions
+- Natural language to shell commands
+- Context-aware suggestions
+- Multi-step command sequences
+- Platform-specific commands
+
+### Command Explanations
+- Break down complex commands
+- Understand flags and options
+- Learn command patterns
+- Safety checks before running
+
+### Shell Integration
+- Bash/Zsh/Fish configuration
+- Custom aliases and functions
+- Shell completion
+- History integration
+
+### Workflows
+- DevOps automation
+- System administration
+- Git operations
+- File management
+- Docker/Kubernetes operations
+
+## Use Case Matrix
+
+| Task | Suggested Section | Key Commands |
+|------|------------------|--------------|
+| Learn basic usage | 01-getting-started | Installation, first commands |
+| Get command help | 02-suggest-command | `gh copilot suggest` |
+| Understand commands | 03-explain-command | `gh copilot explain` |
+| Setup shortcuts | 04-shell-integration | Aliases, functions |
+| Boost productivity | 05-aliases-shortcuts | Custom workflows |
+| Real-world tasks | 06-workflows | Practical examples |
+| Master the tool | 07-advanced | Power user tips |
+| Stay secure | 08-best-practices | Security guidelines |
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit:
+- Additional examples
+- Use case scenarios
+- Best practices
+- Bug fixes or improvements
+
+## Related Resources
+
+- [📊 Claude Code vs GitHub Copilot CLI Comparison](./CLAUDE-CODE-COMPARISON.md)
+- [GitHub Copilot CLI Documentation](https://docs.github.com/en/copilot/github-copilot-in-the-cli)
+- [GitHub CLI Documentation](https://cli.github.com/manual/)
+- [GitHub Copilot](https://github.com/features/copilot)
+
+## License
+
+MIT License - Feel free to use these examples for learning and reference.
+
+## Acknowledgments
+
+Inspired by [claude-howto](https://github.com/luongnv89/claude-howto) - a comprehensive guide for Claude Code.
+
+---
+
+**Start your learning journey**: Begin with [01-getting-started](./01-getting-started/)
