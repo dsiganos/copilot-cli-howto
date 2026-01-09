@@ -5,240 +5,270 @@
 
 ## Overview
 
-Learn how to install, configure, and run your first commands with GitHub Copilot CLI.
+Learn how to install, authenticate, and run GitHub Copilot CLI for the first time.
 
 ## Prerequisites
 
-Before you begin, make sure you have:
+Before you begin, ensure you have:
 
-1. **GitHub Account** with Copilot access
-   - Individual, Business, or Enterprise subscription
+1. **GitHub Copilot subscription**
+   - Individual, Business, or Enterprise plan
    - [Sign up for Copilot](https://github.com/features/copilot)
 
-2. **GitHub CLI** installed
-   - Version 2.0.0 or later
-   - [Installation guide](https://github.com/cli/cli#installation)
-
-3. **Supported Shell**
-   - Bash, Zsh, Fish, or PowerShell
-   - macOS, Linux, Windows (WSL), or Windows native
+2. **Supported Platform**
+   - macOS, Linux, or Windows
+   - Node.js 18+ (for npm installation)
 
 ## Installation
 
-### Step 1: Install GitHub CLI
+Choose your preferred installation method:
 
-#### Linux/WSL (Debian/Ubuntu)
+### macOS/Linux (Homebrew)
+
 ```bash
-curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-sudo apt update
-sudo apt install gh
+brew install copilot-cli
 ```
 
-#### macOS
+### npm (Cross-platform)
+
 ```bash
-brew install gh
+npm install -g @github/copilot
 ```
 
-#### Windows (PowerShell)
+### Windows (winget)
+
 ```powershell
-winget install --id GitHub.cli
+winget install GitHub.Copilot
 ```
 
-### Step 2: Authenticate with GitHub
+### Universal (Shell Script)
 
 ```bash
-gh auth login
+curl -fsSL https://gh.io/copilot-install | bash
 ```
 
-Follow the prompts to:
-1. Choose GitHub.com
-2. Select HTTPS or SSH
-3. Authenticate via browser or token
-
-### Step 3: Install Copilot CLI Extension
+## Verify Installation
 
 ```bash
-gh extension install github/gh-copilot
-```
-
-### Step 4: Verify Installation
-
-```bash
-gh copilot --version
+copilot --version
 ```
 
 You should see version information displayed.
 
-## Basic Commands
+## First Run
 
-GitHub Copilot CLI provides two main commands:
-
-### 1. `gh copilot suggest` - Get Command Suggestions
-
-Ask Copilot to suggest a command for what you want to do:
+### Start Copilot CLI
 
 ```bash
-gh copilot suggest "find all pdf files in current directory"
+copilot
 ```
 
-**Interactive Flow**:
-1. Copilot suggests a command
-2. You can:
-   - Execute it
-   - Revise the request
-   - Copy to clipboard
-   - Exit
+### Authentication
 
-### 2. `gh copilot explain` - Explain Commands
+On first launch, Copilot will prompt you to authenticate:
 
-Get explanations for complex commands:
+1. A browser window opens (or you'll see a URL and code)
+2. Log in to your GitHub account
+3. Authorize the application
+4. Return to the terminal
+
+Alternatively, authenticate directly:
 
 ```bash
-gh copilot explain "tar -xzf archive.tar.gz -C /destination"
+copilot
+> /login
 ```
 
-**Output**: Plain English explanation of what the command does.
+### Trust Model
 
-## Your First Commands
+Copilot will ask you to trust the current directory:
 
-### Example 1: Find Large Files
+```
+? Do you trust the files in this folder? (y/n)
+```
+
+This is a security measure - Copilot can read and modify files in trusted directories.
+
+**Options:**
+- **y** - Trust this directory
+- **n** - Work without file access
+
+## Your First Conversation
+
+Once authenticated, start chatting:
 
 ```bash
-gh copilot suggest "find files larger than 100MB"
+$ copilot
+> Hello! What can you help me with?
+
+GitHub Copilot CLI can help you:
+- Understand and explain code
+- Write and modify code
+- Debug issues
+- Run commands
+- And much more...
+
+> What files are in this directory?
+
+[Copilot lists and describes the files]
+
+> Can you explain what the main function does?
+
+[Copilot analyzes the code and explains]
 ```
 
-**Expected Suggestion**:
+## Command Line Options
+
+### Interactive Mode (Default)
+
 ```bash
-find . -type f -size +100M
+copilot
 ```
 
-### Example 2: Explain a Git Command
+Opens a conversational session where you can chat continuously.
+
+### Single Prompt Mode
 
 ```bash
-gh copilot explain "git rebase -i HEAD~3"
+copilot -p "your question here"
+copilot --prompt "your question here"
 ```
 
-**Expected Explanation**:
-> This command starts an interactive rebase for the last 3 commits...
+Sends a single prompt and returns the response.
 
-### Example 3: Docker Operations
+### Resume Previous Session
 
 ```bash
-gh copilot suggest "stop all running docker containers"
+copilot --resume
+copilot --continue
 ```
 
-**Expected Suggestion**:
+Continues from your last conversation with full context.
+
+### Other Options
+
 ```bash
-docker stop $(docker ps -q)
+copilot --help              # Show all options
+copilot --version           # Show version
+copilot --allow-all-paths   # Trust all file paths
+copilot --allow-url         # Allow URL access
 ```
-
-## Understanding the Interactive Mode
-
-When you run `gh copilot suggest`, you enter an interactive session:
-
-```
-? Select a command:
-  ⦿ find . -type f -size +100M
-    find . -size +100M -exec ls -lh {} \;
-
-? What would you like to do?
-  > Execute command
-    Revise command
-    Copy to clipboard
-    Exit
-```
-
-**Options**:
-- **Execute command**: Run the suggested command immediately
-- **Revise command**: Refine your request with more details
-- **Copy to clipboard**: Copy without executing
-- **Exit**: Leave without action
 
 ## Configuration
 
-### Check Current Settings
+### View Current Settings
+
+Copilot stores settings in your home directory. View them with:
 
 ```bash
-gh copilot config
+cat ~/.config/github-copilot/config.json
 ```
 
-### Set Preferences
+### Model Selection
+
+Change the AI model (default is Claude Sonnet 4.5):
 
 ```bash
-# Set default shell context (bash, zsh, powershell, etc.)
-gh copilot config set shell bash
-
-# Enable/disable telemetry
-gh copilot config set telemetry off
+copilot
+> /model
 ```
 
-## Common First-Time Issues
+Available models:
+- Claude Sonnet 4.5 (default)
+- Claude Sonnet 4
+- GPT-5
 
-### Issue: "extension not found"
-**Solution**: Make sure you installed the extension:
+## Troubleshooting
+
+### "Authentication required"
+
 ```bash
-gh extension install github/gh-copilot
+copilot
+> /login
 ```
 
-### Issue: "authentication required"
-**Solution**: Authenticate with GitHub:
+Or re-run the authentication flow.
+
+### "Copilot not found"
+
+Ensure the installation completed and the binary is in your PATH:
+
 ```bash
-gh auth login
+# Check if installed
+which copilot
+
+# If using npm, check global modules
+npm list -g @github/copilot
 ```
 
-### Issue: "copilot not available"
-**Solution**: Verify you have Copilot access on your GitHub account.
+### "Subscription required"
+
+Verify you have an active GitHub Copilot subscription at:
+https://github.com/settings/copilot
+
+### Permission Denied Errors
+
+Run with elevated permissions:
+
+```bash
+# macOS/Linux
+sudo npm install -g @github/copilot
+
+# Or fix npm permissions
+npm config set prefix ~/.npm-global
+```
 
 ## Practice Exercises
 
-Try these commands to get comfortable:
+Try these to get comfortable:
 
-1. **System Information**
+1. **Start a session**
    ```bash
-   gh copilot suggest "show disk usage by directory"
+   copilot
    ```
 
-2. **Process Management**
-   ```bash
-   gh copilot suggest "find processes using port 8080"
+2. **Ask about your project**
+   ```
+   > What does this project do?
    ```
 
-3. **Text Processing**
-   ```bash
-   gh copilot suggest "count lines in all javascript files"
+3. **Get help on a command**
+   ```
+   > How do I use git rebase?
    ```
 
-4. **Explain a Command**
-   ```bash
-   gh copilot explain "ps aux | grep node | awk '{print $2}' | xargs kill"
+4. **Check available commands**
    ```
+   > ?
+   ```
+
+5. **Exit the session**
+   ```
+   > exit
+   ```
+   Or press `Ctrl+C`
 
 ## Quick Reference
 
-| Command | Purpose | Example |
-|---------|---------|---------|
-| `gh copilot suggest "task"` | Get command suggestions | `gh copilot suggest "compress folder"` |
-| `gh copilot explain "cmd"` | Explain a command | `gh copilot explain "rsync -avz"` |
-| `gh copilot --version` | Check version | - |
-| `gh copilot config` | View configuration | - |
-| `gh extension upgrade gh-copilot` | Update extension | - |
+| Action | Command |
+|--------|---------|
+| Start interactive mode | `copilot` |
+| Single prompt | `copilot -p "prompt"` |
+| Resume session | `copilot --resume` |
+| Show help | `copilot --help` |
+| Login | `/login` in session |
+| Show commands | `?` in session |
+| Exit | `exit` or `Ctrl+C` |
 
 ## Next Steps
 
-Now that you have Copilot CLI installed and working:
+Now that you have Copilot CLI installed and running:
 
-1. [02-suggest-command](../02-suggest-command/) - Deep dive into command suggestions
-2. [03-explain-command](../03-explain-command/) - Master command explanations
-3. [04-shell-integration](../04-shell-integration/) - Set up aliases and shell integration
-
-## Resources
-
-- [Official Documentation](https://docs.github.com/en/copilot/github-copilot-in-the-cli)
-- [GitHub CLI Manual](https://cli.github.com/manual/)
-- [Copilot FAQ](https://github.com/features/copilot)
+1. [02-basic-usage](../02-basic-usage/) - Learn conversational interactions
+2. [03-slash-commands](../03-slash-commands/) - Master slash commands
+3. [04-file-operations](../04-file-operations/) - Work with files
 
 ---
 
 **Estimated completion time**: 15 minutes
-**Next**: [02-suggest-command](../02-suggest-command/)
+**Next**: [02-basic-usage](../02-basic-usage/)

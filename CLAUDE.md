@@ -2,31 +2,37 @@
 
 ## About This Project
 
-A learning resource for GitHub Copilot CLI - needs updating for the NEW agentic tool.
+A comprehensive learning resource for **GitHub Copilot CLI** - the new agentic AI assistant for the terminal (started with the `copilot` command).
 
-## Critical Knowledge
+**Status:** Updated for the NEW Copilot CLI (not the deprecated `gh copilot`)
 
-**Read this first:** [docs/copilot-cli-research.md](docs/copilot-cli-research.md)
+## Project Structure
 
-Key points:
-- The `copilot` command is a NEW agentic CLI (very similar to Claude Code)
-- The old `gh copilot` extension was **deprecated October 2025**
-- Current project content is outdated (written for old `gh copilot`)
+```
+01-getting-started     → Installation, authentication, first run
+02-basic-usage         → Interactive mode, prompts, conversations
+03-slash-commands      → /model, /mcp, /delegate, /agent, etc.
+04-file-operations     → @filepath syntax, editing, permissions
+05-shell-integration   → !command passthrough
+06-mcp-extensions      → MCP servers, custom agents
+07-github-integration  → /delegate, issues, PRs
+08-workflows           → Real-world agentic workflows
+09-advanced            → Sessions, models, optimization
+10-best-practices      → Security, permissions, safety
+```
 
-## What Needs Updating
+## Key Reference
 
-All sections need revision for the NEW `copilot` tool:
+**Detailed Copilot CLI research:** [docs/copilot-cli-research.md](docs/copilot-cli-research.md)
 
-1. **README.md** - New description and installation
-2. **01-getting-started/** - `copilot` command, not `gh copilot`
-3. **02-suggest-command/** - Now conversational, not one-shot
-4. **03-explain-command/** - Works differently now
-5. **04-shell-integration/** - New slash commands (`/model`, `/mcp`, etc.)
-6. **05-aliases-shortcuts/** - May need revision
-7. **06-workflows/** - Update for agentic capabilities
-8. **07-advanced/** - MCP servers, custom agents, `/delegate`
-9. **08-best-practices/** - Still relevant
-10. **CLAUDE-CODE-COMPARISON.md** - Major revision (tools are now very similar!)
+## Quick Facts
+
+- **Command:** `copilot` (not `gh copilot`)
+- **Type:** Agentic AI assistant (similar to Claude Code)
+- **Default model:** Claude Sonnet 4.5
+- **File syntax:** `@filepath`
+- **Shell syntax:** `!command`
+- **Custom instructions:** `.github/copilot-instructions.md`
 
 ## Repository
 
