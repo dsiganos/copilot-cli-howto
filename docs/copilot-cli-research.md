@@ -90,6 +90,21 @@ Change with `/model` slash command.
 - Load custom agents from user, repo, org, and enterprise levels
 - Custom instructions from Markdown files
 
+### Custom Instructions Files (Equivalent of CLAUDE.md)
+
+| Scope | Location |
+|-------|----------|
+| Repository-wide | `.github/copilot-instructions.md` |
+| Path-specific | `.github/copilot-instructions/**/*.instructions.md` |
+
+**Comparison with Claude Code:**
+
+| Feature | Claude Code | Copilot CLI |
+|---------|-------------|-------------|
+| Main file | `CLAUDE.md` | `.github/copilot-instructions.md` |
+| Location | Project root | `.github/` directory |
+| Path-specific | `folder/CLAUDE.md` | `.github/copilot-instructions/path.instructions.md` |
+
 ### GitHub Integration
 - Access to GitHub repositories, issues, and PRs
 - `/delegate` to hand off to GitHub's cloud agent
