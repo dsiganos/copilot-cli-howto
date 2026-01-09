@@ -13,14 +13,41 @@ GitHub Copilot CLI is an **agentic AI assistant** that brings AI-powered coding 
 ```bash
 # macOS/Linux
 brew install copilot-cli
-# or
+# Prerelease:
+brew install copilot-cli@prerelease
+
+# npm (requires Node.js 22+)
 npm install -g @github/copilot
+# Prerelease:
+npm install -g @github/copilot@prerelease
 
 # Windows
 winget install GitHub.Copilot
+# Prerelease:
+winget install GitHub.Copilot.Prerelease
 
 # Universal
 curl -fsSL https://gh.io/copilot-install | bash
+# With custom directory and version:
+curl -fsSL https://gh.io/copilot-install | VERSION="v0.0.369" PREFIX="$HOME/custom" bash
+
+# Direct download from releases
+# https://github.com/github/copilot-cli/releases
+```
+
+## Authentication
+
+```bash
+# Interactive OAuth flow
+copilot
+> /login
+
+# Using Personal Access Token (PAT)
+# Create PAT at: https://github.com/settings/personal-access-tokens/new
+# Enable "Copilot Requests" permission
+export GH_TOKEN="your-token-here"
+# or
+export GITHUB_TOKEN="your-token-here"
 ```
 
 ## Starting the Tool
@@ -36,6 +63,21 @@ copilot --prompt "your prompt here"
 # Resume previous session
 copilot --resume
 copilot --continue
+
+# Other options
+copilot --allow-all-paths      # Trust all file paths
+copilot --allow-all-urls       # Allow all URL access
+copilot --allow-url <domain>   # Allow specific domain
+copilot --agent=<name>         # Use specific custom agent
+copilot --banner               # Show animated banner
+copilot --version              # Show version
+copilot --help                 # Show help
+
+# Help subcommands
+copilot help config            # Configuration details
+copilot help environment       # Environment variables
+copilot help logging           # Logging configuration
+copilot help permissions       # Permission settings
 ```
 
 ## Models Available
@@ -65,9 +107,14 @@ Change with `/model` slash command.
 
 | Syntax | Description |
 |--------|-------------|
-| `@filepath` | Reference specific files |
+| `@filepath` | Reference specific files (supports Tab completion) |
 | `!command` | Execute shell commands directly (bypasses AI) |
 | `Esc` | Stop operations mid-execution |
+
+### File Reference Features
+- **Tab completion**: Press Tab after `@` to auto-complete file paths
+- **Arrow key navigation**: Use ↑↓ arrows to navigate menus (model selection, etc.)
+- **Esc**: Cancel current selection or operation
 
 ## Key Features
 
@@ -90,12 +137,23 @@ Change with `/model` slash command.
 - Load custom agents from user, repo, org, and enterprise levels
 - Custom instructions from Markdown files
 
+**Agent Locations:**
+- User: `~/.copilot/agents/`
+- Repository: `.github/agents/`
+- Organization: Org settings
+- Enterprise: Enterprise settings
+
+**AGENTS.md Support:**
+- Create `AGENTS.md` in repository root for agent context
+- Automatically loaded when custom agents are used
+
 ### Custom Instructions Files (Equivalent of CLAUDE.md)
 
 | Scope | Location |
 |-------|----------|
 | Repository-wide | `.github/copilot-instructions.md` |
 | Path-specific | `.github/copilot-instructions/**/*.instructions.md` |
+| User-level | `~/.copilot/instructions.md` |
 
 **Comparison with Claude Code:**
 
@@ -104,6 +162,7 @@ Change with `/model` slash command.
 | Main file | `CLAUDE.md` | `.github/copilot-instructions.md` |
 | Location | Project root | `.github/` directory |
 | Path-specific | `folder/CLAUDE.md` | `.github/copilot-instructions/path.instructions.md` |
+| User-level | `~/.claude/` | `~/.copilot/instructions.md` |
 
 ### GitHub Integration
 - Access to GitHub repositories, issues, and PRs
@@ -112,19 +171,55 @@ Change with `/model` slash command.
 
 ## Permissions & Safety
 
-- Asks for approval before modifying/deleting files
-- Path and URL permission systems with heuristic-based detection
-- Options to approve individual commands or batch-approve for session
+### Tool Approval System
 
-**Flags:**
+When Copilot proposes to use a tool (edit file, run command, etc.), three options:
+1. **Approve once** - Just this action
+2. **Approve for session** - All similar actions in this session
+3. **Reject** - Don't perform this action
+
+### URL Permissions
+
+- **By default, all URL access requires approval**
+- Use `--allow-all-urls` to allow all URLs (use carefully!)
+- Use `--allow-url <domain>` to allow specific domains
+
+### Path Detection
+
+- Copilot has **limitations in automatically detecting file paths** in prompts
+- **Always use `@filepath` syntax** for reliable file references
+- Path detection may fail for:
+  - Paths without file extensions
+  - Paths in long sentences
+  - Ambiguous references
+  - Paths with spaces/special characters
+
+### Permission Flags
+
 - `--allow-all-paths` - Allow all path access
-- `--allow-url` - Allow URL access
+- `--allow-all-urls` - Allow all URL access
+- `--allow-url <domain>` - Allow specific domain
 
 ## Requirements
 
 - Active GitHub Copilot subscription (Individual, Business, or Enterprise)
+- Node.js 22+ (for npm installation)
 - PowerShell v6+ (Windows only)
 - Organization/enterprise policies must permit CLI usage
+
+## Configuration
+
+- Config directory: `~/.copilot/`
+- Main config file: `~/.copilot/config.json`
+- Can be customized with `XDG_CONFIG_HOME` environment variable
+- MCP servers: `~/.copilot/mcp.json`
+
+## Usage Quota
+
+- **Monthly quota for premium requests**
+- Premium requests use advanced model capabilities
+- Check with `/usage` command
+- Tips to conserve: use concise prompts, break tasks into smaller pieces
 
 ## Comparison: Old vs New
 

@@ -108,6 +108,43 @@ Proposed changes to src/utils.js:
 Apply changes? (y/n)
 ```
 
+### Tool Approval System
+
+When Copilot proposes to use a tool (edit file, run command, etc.), you have **three options**:
+
+```
+Tool: Edit file src/config.js
+
+How would you like to proceed?
+  1. Approve once (just this action)
+  2. Approve for session (all similar actions)
+  3. Reject (don't perform this action)
+
+Choice (1/2/3):
+```
+
+**Option details:**
+
+- **Approve once (1)**: Approves only this specific action. You'll be prompted again for the next action.
+- **Approve for session (2)**: Approves all similar tool uses for the rest of the session. Use this when you trust Copilot to make multiple similar changes.
+- **Reject (3)**: Cancels this action. Copilot will not proceed with the proposed change.
+
+**When to use each:**
+
+```bash
+# Approve once - for careful, step-by-step verification
+> @src/important.js make changes
+[Choose 1] - Review each change individually
+
+# Approve for session - for batch operations you trust
+> Fix typos in all @src/*.js files
+[Choose 2] - Trust Copilot to fix all files
+
+# Reject - when the proposed action is wrong
+> @production.config delete this file
+[Choose 3] - Don't delete important config!
+```
+
 ### Undo Changes
 
 If you approve a change you don't want:

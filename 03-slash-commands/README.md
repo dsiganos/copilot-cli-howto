@@ -164,6 +164,27 @@ Task delegated to Copilot coding agent.
 You can track progress at: https://github.com/user/repo/copilot/tasks/123
 ```
 
+**Best practices for delegation:**
+
+Before calling `/delegate`, provide clear context:
+- Describe the task in detail
+- Reference relevant files with @filepath
+- Specify requirements and constraints
+- Mention any edge cases to handle
+- Clarify expected outcomes
+
+```bash
+# Good delegation prompt
+> I need to add user authentication with the following requirements:
+> - Use JWT tokens
+> - Hash passwords with bcrypt
+> - Add login/logout endpoints
+> - Update @src/models/user.js to include password field
+> - Add tests for all authentication functions
+>
+> /delegate
+```
+
 ## Custom Agents
 
 ### /agent
@@ -290,6 +311,41 @@ Display all available commands:
 - All slash commands
 - Brief descriptions
 - Usage hints
+
+## Interface Features
+
+### Tab Completion
+
+Copilot CLI supports **Tab completion** for file paths when using `@filepath` syntax:
+
+```bash
+> @src/[Tab]
+# Shows available files and directories in src/
+
+> @src/api/[Tab]
+# Shows files in src/api/
+
+> @README[Tab]
+# Completes to @README.md
+```
+
+This makes it easy to reference files without typing full paths.
+
+### Arrow Key Navigation
+
+Use **arrow keys** to navigate through options when selecting:
+
+- **↑/↓** Navigate menu options (model selection, agent selection, etc.)
+- **Enter** Confirm selection
+- **Esc** Cancel selection
+
+```bash
+> /model
+# Use ↑↓ to select model
+# Press Enter to confirm
+```
+
+This applies to all interactive menus in Copilot CLI.
 
 ## Command Patterns
 

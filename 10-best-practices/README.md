@@ -92,6 +92,7 @@ copilot --allow-all-paths  # Only when necessary
 | Create new file | Approval required |
 | Delete file | Explicit approval |
 | Run commands | Explicit approval |
+| Access URLs | Approval required (default) |
 
 ### Safe Approval Patterns
 
@@ -111,6 +112,53 @@ Say **n** (no) when:
 - It modifies files you didn't expect
 - It includes hardcoded secrets
 - Something feels wrong
+
+### URL Permissions
+
+**By default, all URL access requires approval.** This is a security measure.
+
+```bash
+# Copilot asks before accessing URLs
+> Fetch data from https://api.example.com
+
+Copilot wants to access: https://api.example.com
+Allow? (y/n)
+```
+
+**Granting URL access:**
+
+```bash
+# Allow all URLs (use carefully!)
+copilot --allow-all-urls
+
+# Allow specific domain
+copilot --allow-url api.example.com
+
+# Multiple domains
+copilot --allow-url api.example.com --allow-url cdn.example.com
+```
+
+**Best practice:** Only allow trusted domains. Never use `--allow-all-urls` in production environments.
+
+### Path Detection Limits
+
+Copilot has **limitations in automatically detecting file paths** in conversational prompts:
+
+```bash
+# ❌ May not detect path
+> Look at the file src/config.js
+
+# ✅ Explicit reference
+> @src/config.js show me this file
+```
+
+**When path detection may fail:**
+- Paths without file extensions
+- Paths in long sentences
+- Ambiguous file references
+- Paths with spaces or special characters
+
+**Always use `@filepath` syntax for reliable file references.**
 
 ## Code Quality
 

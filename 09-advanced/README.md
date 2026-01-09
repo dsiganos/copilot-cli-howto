@@ -159,14 +159,29 @@ Premium requests are used for:
 - Large context windows
 - Certain model features
 
+**Quota System:**
+- GitHub Copilot has a **monthly quota for premium requests**
+- Premium requests use more advanced model capabilities
+- Free tier has limited premium requests
+- Paid subscriptions have higher quotas
+
 Monitor and optimize:
 
 ```bash
 > /usage
 
+Session Statistics:
+- Premium requests used: 8/100 (monthly quota)
+- Resets: Jan 31, 2025
+
 # If approaching limits, use simpler queries
 # or switch to tasks that don't require premium
 ```
+
+**Tips to conserve quota:**
+- Use concise prompts
+- Break large tasks into smaller ones
+- Switch to Claude Sonnet 4 for simple tasks
 
 ## Custom Instructions
 
@@ -212,7 +227,7 @@ When working in the /api directory:
 
 ### User-Level Instructions
 
-Create `~/.config/github-copilot/instructions.md`:
+Create `~/.copilot/instructions.md`:
 
 ```markdown
 # Personal Preferences
@@ -221,6 +236,8 @@ Create `~/.config/github-copilot/instructions.md`:
 - Always suggest TypeScript over JavaScript
 - Include error handling in all examples
 ```
+
+**Note:** The config directory can be customized using the `XDG_CONFIG_HOME` environment variable.
 
 ## Advanced Patterns
 
@@ -294,10 +311,33 @@ Options:
   --resume               Resume last session
   --continue             Same as --resume
   --allow-all-paths      Trust all file paths
-  --allow-url            Allow URL access
+  --allow-all-urls       Allow all URL access
+  --allow-url <domain>   Allow specific domain
+  --agent=<name>         Use specific custom agent
+  --banner               Show animated banner
   --version              Show version
   --help                 Show help
 ```
+
+### Help Subcommands
+
+Copilot provides detailed help for specific topics:
+
+```bash
+# Configuration details
+copilot help config
+
+# Environment variables
+copilot help environment
+
+# Logging configuration
+copilot help logging
+
+# Permission settings
+copilot help permissions
+```
+
+Each subcommand provides detailed information about that specific topic.
 
 ### Scripting with Copilot
 

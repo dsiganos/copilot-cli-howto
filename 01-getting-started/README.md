@@ -17,7 +17,8 @@ Before you begin, ensure you have:
 
 2. **Supported Platform**
    - macOS, Linux, or Windows
-   - Node.js 18+ (for npm installation)
+   - Node.js 22+ (for npm installation)
+   - PowerShell v6+ (Windows only)
 
 ## Installation
 
@@ -27,25 +28,58 @@ Choose your preferred installation method:
 
 ```bash
 brew install copilot-cli
+
+# For prerelease version
+brew install copilot-cli@prerelease
 ```
 
 ### npm (Cross-platform)
 
+Requires Node.js 22+:
+
 ```bash
 npm install -g @github/copilot
+
+# For prerelease version
+npm install -g @github/copilot@prerelease
 ```
 
 ### Windows (winget)
 
 ```powershell
 winget install GitHub.Copilot
+
+# For prerelease version
+winget install GitHub.Copilot.Prerelease
 ```
 
 ### Universal (Shell Script)
 
 ```bash
 curl -fsSL https://gh.io/copilot-install | bash
+
+# Or with wget
+wget -qO- https://gh.io/copilot-install | bash
 ```
+
+### Custom Installation
+
+Specify custom directory or version:
+
+```bash
+# Install to custom directory
+curl -fsSL https://gh.io/copilot-install | PREFIX="$HOME/custom" bash
+
+# Install specific version
+curl -fsSL https://gh.io/copilot-install | VERSION="v0.0.369" bash
+
+# Both options
+curl -fsSL https://gh.io/copilot-install | VERSION="v0.0.369" PREFIX="$HOME/custom" bash
+```
+
+### Direct Download
+
+Download executables directly from the [copilot-cli releases](https://github.com/github/copilot-cli/releases) page.
 
 ## Verify Installation
 
@@ -77,6 +111,21 @@ Alternatively, authenticate directly:
 ```bash
 copilot
 > /login
+```
+
+### Alternative: Personal Access Token (PAT)
+
+You can also authenticate using a fine-grained PAT:
+
+1. Create a PAT at https://github.com/settings/personal-access-tokens/new
+2. Enable the **"Copilot Requests"** permission
+3. Set the environment variable:
+
+```bash
+# Add to your shell profile
+export GH_TOKEN="your-token-here"
+# or
+export GITHUB_TOKEN="your-token-here"
 ```
 
 ### Trust Model
@@ -151,7 +200,20 @@ Continues from your last conversation with full context.
 copilot --help              # Show all options
 copilot --version           # Show version
 copilot --allow-all-paths   # Trust all file paths
-copilot --allow-url         # Allow URL access
+copilot --allow-all-urls    # Allow all URL access
+copilot --allow-url <domain> # Allow specific domain
+copilot --agent=<name>      # Use specific custom agent
+copilot --banner            # Show animated banner
+```
+
+### Help Subcommands
+
+```bash
+copilot help                # List all options
+copilot help config         # Configuration details
+copilot help environment    # Environment variables
+copilot help logging        # Logging levels
+copilot help permissions    # Permission settings
 ```
 
 ## Configuration
@@ -161,8 +223,10 @@ copilot --allow-url         # Allow URL access
 Copilot stores settings in your home directory. View them with:
 
 ```bash
-cat ~/.config/github-copilot/config.json
+cat ~/.copilot/config.json
 ```
+
+The config directory can be customized using the `XDG_CONFIG_HOME` environment variable.
 
 ### Model Selection
 

@@ -57,7 +57,7 @@ Active MCP Servers:
 MCP servers are configured in your settings:
 
 ```json
-// ~/.config/github-copilot/mcp.json
+// ~/.copilot/mcp.json
 {
   "servers": {
     "postgres": {
@@ -140,8 +140,8 @@ Custom agents are specialized versions of Copilot with:
 
 | Level | Location | Scope |
 |-------|----------|-------|
-| User | `~/.config/github-copilot/agents/` | Personal |
-| Repository | `.github/copilot/agents/` | Project |
+| User | `~/.copilot/agents/` | Personal |
+| Repository | `.github/agents/` | Project |
 | Organization | Org settings | Team |
 | Enterprise | Enterprise settings | Company |
 
@@ -165,7 +165,7 @@ Available agents:
 Create an agent configuration file:
 
 ```yaml
-# ~/.config/github-copilot/agents/code-reviewer.yml
+# ~/.copilot/agents/code-reviewer.yml
 name: code-reviewer
 description: Reviews code for best practices and issues
 instructions: |
@@ -180,7 +180,7 @@ instructions: |
 ### Repository-Level Agent
 
 ```yaml
-# .github/copilot/agents/project-assistant.yml
+# .github/agents/project-assistant.yml
 name: project-assistant
 description: Knows this specific project
 instructions: |
@@ -204,7 +204,7 @@ Markdown files that provide context and guidelines to Copilot.
 ### Creating Custom Instructions
 
 ```markdown
-# .github/copilot/instructions.md
+# .github/copilot-instructions.md
 
 ## Project Overview
 This is an e-commerce platform built with React and Node.js.
@@ -229,9 +229,43 @@ This is an e-commerce platform built with React and Node.js.
 
 | Location | Priority | Scope |
 |----------|----------|-------|
-| `.github/copilot/instructions.md` | Highest | Repository |
-| `~/.config/github-copilot/instructions.md` | Medium | User |
+| `.github/copilot-instructions.md` | Highest | Repository |
+| `~/.copilot/instructions.md` | Medium | User |
 | Organization settings | Lower | Organization |
+
+### Path-Specific Instructions
+
+Create instructions for specific paths in your project:
+
+```markdown
+# .github/copilot-instructions/api.instructions.md
+When working in the /api directory:
+- Follow REST conventions
+- Use proper HTTP status codes
+- Include request validation
+- Add rate limiting to public endpoints
+```
+
+Path-specific instructions apply when working in that directory.
+
+### AGENTS.md File
+
+You can also create an `AGENTS.md` file in your repository to provide additional context:
+
+```markdown
+# AGENTS.md
+This file provides context about custom agents in this repository.
+
+## Available Agents
+- code-reviewer: Reviews code for quality and issues
+- security-auditor: Focuses on security vulnerabilities
+- test-generator: Creates comprehensive test suites
+
+## Project Context
+[Information about your project that all agents should know]
+```
+
+The `AGENTS.md` file is automatically loaded when custom agents are used.
 
 ## Building MCP Servers
 
@@ -268,7 +302,7 @@ server.start();
 ### Registering Your Server
 
 ```json
-// ~/.config/github-copilot/mcp.json
+// ~/.copilot/mcp.json
 {
   "servers": {
     "weather": {
@@ -398,11 +432,14 @@ Store repository agents in version control:
 
 ```
 .github/
-  copilot/
-    agents/
-      code-reviewer.yml
-      docs-writer.yml
-    instructions.md
+  agents/
+    code-reviewer.yml
+    docs-writer.yml
+  copilot-instructions.md
+  copilot-instructions/
+    api.instructions.md
+    frontend.instructions.md
+AGENTS.md
 ```
 
 ## Troubleshooting
@@ -425,8 +462,8 @@ Store repository agents in version control:
 > /agent
 
 # Check agent file location
-ls ~/.config/github-copilot/agents/
-ls .github/copilot/agents/
+ls ~/.copilot/agents/
+ls .github/agents/
 ```
 
 ### Instructions Not Applied
